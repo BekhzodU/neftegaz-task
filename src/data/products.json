@@ -1,0 +1,68 @@
+[
+  {
+    "id": "prod_1",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-619.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_2",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-620.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_3",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-604.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_4",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-company-annual-report-design-template_812472-652.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_5",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-619.jpg",
+
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_6",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-620.jpg",
+
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_7",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-design-company-annual-report_812472-604.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  },
+  {
+    "id": "prod_8",
+    "organization": "Организации Узбекистон",
+    "name": "Журнал иновационных иследований в текстильной и легкой промышленности...",
+    "imageSrc": "https://img.freepik.com/premium-vector/vector-modern-book-cover-company-annual-report-design-template_812472-652.jpg",
+    "views": 320,
+    "date": "12.12.2022"
+  }
+]
