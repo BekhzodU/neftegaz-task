@@ -1,13 +1,86 @@
-import { PlusIcon } from "@heroicons/react/16/solid";
+import { useReducer } from "react";
 import Input from "./Input";
 import Select from "./Select";
+import EducationSection from "./EducationSection";
+import ExtraEducationSection from "./ExtraEducationSection";
+import LanguageSection from "./LanguageSection";
+import WorkSection from "./WorkSection";
+import AddButton from "./AddButton";
+import { groupFieldsByIndex } from "../../utils/helper";
+
+const personalInfoInputs = [
+  { name: "surname", placeholder: "Familiya" },
+  { name: "name", placeholder: "Ism" },
+  { name: "patronymic", placeholder: "Sharif" },
+  { name: "birthDay", placeholder: "Tug'ilgan kun", type: "number" },
+  { name: "birthMonth", placeholder: "Tug'ilgan oy", type: "number" },
+  { name: "birthYear", placeholder: "Tug'ilgan yil", type: "number" },
+  { name: "address", placeholder: "Yashash manzili" },
+  { name: "phone", placeholder: "Telefon raqam" },
+  { name: "email", placeholder: "Elektron pochta", type: "email" },
+];
+
+const educationFields = [
+  "institution",
+  "faculty",
+  "specialty",
+  "graduationYear",
+];
+const extraEducationFields = [
+  "extraInstitution",
+  "extraSpecialty",
+  "extraEndMonth",
+  "extraEndYear",
+];
+const languageFields = ["language", "oral", "written", "reading"];
+const workFields = [
+  "organizationName",
+  "position",
+  "startMonth",
+  "startYear",
+  "endMonth",
+  "endYear",
+];
+
+const initialState = {
+  educations: 1,
+  extraEducations: 1,
+  languages: 1,
+  works: 1,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "addEducation":
+      return { ...state, educations: state.educations + 1 };
+    case "addExtraEducation":
+      return { ...state, extraEducations: state.extraEducations + 1 };
+    case "addLanguage":
+      return { ...state, languages: state.languages + 1 };
+    case "addWork":
+      return { ...state, works: state.works + 1 };
+    default:
+      return state;
+  }
+}
 
 const VacanciesForm = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const formData = Object.fromEntries(data.entries());
-    console.log(formData);
+
+    const finalData = {
+      educations: groupFieldsByIndex(formData, educationFields),
+      extraEducations: groupFieldsByIndex(formData, extraEducationFields),
+      languages: groupFieldsByIndex(formData, languageFields),
+      works: groupFieldsByIndex(formData, workFields),
+      ...formData,
+    };
+
+    console.log(finalData);
   };
 
   return (
@@ -28,163 +101,68 @@ const VacanciesForm = () => {
           <div className="mt-6">
             <h3 className="text-lg font-medium my-4">{`Shaxsiy ma'lumotlar:`}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Input name="surname" placeholder="Familiya" />
-              <Input name="name" placeholder="Ism" />
-              <Input name="patronymic" placeholder="Sharif" />
-              <Input
-                name="birthDay"
-                placeholder="Tug'ilgan kun"
-                type="number"
-              />
-              <Input
-                name="birthMonth"
-                placeholder="Tug'ilgan oy"
-                type="number"
-              />
-              <Input
-                name="birthYear"
-                placeholder="Tug'ilgan yil"
-                type="number"
-              />
-              <Input name="address" placeholder="Yashash manzili" />
-              <Input name="phone" placeholder="Telefon raqam" />
-              <Input name="email" placeholder="Elektron pochta" type="email" />
+              {personalInfoInputs.map((el) => (
+                <Input
+                  key={el.name}
+                  name={el.name}
+                  placeholder={el.placeholder}
+                  type={el.type}
+                />
+              ))}
             </div>
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h3 className="text-lg font-medium my-4">{`Ma'lumotingiz:`}</h3>
-              <div className="grid grid-cols-1 gap-4">
-                <Input
-                  name="institution"
-                  placeholder="O'qish muassasasi nomi"
-                />
-                <div className="grid grid-cols-2 gap-4">
-                  <Input name="faculty" placeholder="Fakultet" />
-                  <Input name="specialty" placeholder="Mutaxassislik" />
-                </div>
-                <Input name="graduationYear" placeholder="Tugallangan yil" />
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    className="text-[#2D6D76] mt-2 flex justify-center"
-                  >
-                    <span>{`O'quv muassasasi qo'shish`}</span>
-                    <PlusIcon className="w-6 h-6 ml-1" />
-                  </button>
-                </div>
-              </div>
+              {Array.from({ length: state.educations }, (_, index) => (
+                <EducationSection key={index} index={index} />
+              ))}
+              <AddButton
+                label={`O'quv muassasasi qo'shish`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch({ type: "addEducation" });
+                }}
+              />
             </div>
-
             <div>
-              <h3 className="text-lg font-medium my-4">{`Qo'shimcha ma'lumot:`}</h3>
-              <div className="grid grid-cols-1 gap-4">
-                <Input
-                  name="extraInstitution"
-                  placeholder="O'qish muassasasi nomi"
-                />
-                <Input name="extraSpecialty" placeholder="Mutaxassislik" />
-                <div className="grid grid-cols-2 gap-4">
-                  <Input
-                    name="extraEndMonth"
-                    placeholder="Tugallangan oy"
-                    type="number"
-                  />
-                  <Input
-                    name="extraEndYear"
-                    placeholder="Tugallangan yil"
-                    type="number"
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    className="text-[#2D6D76] mt-2 flex justify-center"
-                  >
-                    <span>{`O'quv muassasasi qo'shish`}</span>
-                    <PlusIcon className="w-6 h-6 ml-1" />
-                  </button>
-                </div>
-              </div>
+              {Array.from({ length: state.extraEducations }, (_, index) => (
+                <ExtraEducationSection key={index} index={index} />
+              ))}
+              <AddButton
+                label={`O'quv muassasasi qo'shish`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch({ type: "addExtraEducation" });
+                }}
+              />
             </div>
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h3 className="text-lg font-medium my-4">
-                Xorijiy tillarni bilish:
-              </h3>
-              <div className="grid grid-cols-1 gap-4">
-                <Select
-                  name="language"
-                  options={["Til", "Option 1", "Option 2"]}
-                />
-                <div className="grid grid-cols-3 gap-4">
-                  <Select
-                    name="oral"
-                    options={["Og'zaki", "Option 1", "Option 2"]}
-                  />
-                  <Select
-                    name="written"
-                    options={["Yozma", "Option 1", "Option 2"]}
-                  />
-                  <Select
-                    name="reading"
-                    options={["O'qish", "Option 1", "Option 2"]}
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    className="text-[#2D6D76] mt-2 flex justify-center"
-                  >
-                    <span>{`Til qo'shish`}</span>
-                    <PlusIcon className="w-6 h-6 ml-1" />
-                  </button>
-                </div>
-              </div>
+              {Array.from({ length: state.languages }, (_, index) => (
+                <LanguageSection key={index} index={index} />
+              ))}
+              <AddButton
+                label={`Til qo'shish`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch({ type: "addLanguage" });
+                }}
+              />
             </div>
-
             <div>
-              <h3 className="text-lg font-medium my-4">Mehnat faoliyati:</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <Input name="organizationName" placeholder="Tashkilot nomi" />
-                <Input name="position" placeholder="Lavozimi" />
-              </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <Input
-                  name="startMonth"
-                  placeholder="Boshlangan oy"
-                  type="number"
-                />
-                <Input
-                  name="startYear"
-                  placeholder="Boshlangan yil"
-                  type="number"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <Input
-                  name="endMonth"
-                  placeholder="Tugallangan oy"
-                  type="number"
-                />
-                <Input
-                  name="endYear"
-                  placeholder="Tugallangan yil"
-                  type="number"
-                />
-              </div>
-              <div className="flex justify-end mt-4">
-                <button
-                  type="button"
-                  className="text-[#2D6D76] mt-2 flex justify-center"
-                >
-                  <span>{`Mehnat faoliyati qo'shish`}</span>
-                  <PlusIcon className="w-6 h-6 ml-1" />
-                </button>
-              </div>
+              {Array.from({ length: state.works }, (_, index) => (
+                <WorkSection key={index} index={index} />
+              ))}
+              <AddButton
+                label={`O'quv muassasasi qo'shish`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch({ type: "addWork" });
+                }}
+              />
             </div>
           </div>
           <div className="mt-6 border-t-2 border-gray-300"></div>
